@@ -4,15 +4,12 @@ const user = {
 
 const proxy = new Proxy(user, {
   get(target, prop) {
-    console.log('> get', {target, prop});
-    return (target as any)[prop] as any;
+    throw new Error(`custom error when get ${String(prop)}`)
   },
   set(target, prop, value: any): boolean {
-    console.log('> set', target, prop, value);
-    (target as any)[prop] = value;
-    return true;
+    throw new Error(`custom error when set ${String(prop)}=${value}`)
   }
 })
 
-console.log(proxy.name = '111');
 console.log(proxy.name);
+console.log(proxy.name = '111');
